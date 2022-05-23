@@ -1,3 +1,5 @@
+import {hideBin} from 'yargs/helpers';
+
 type Narrow<T> =
 	| (T extends [] ? [] : never)
 	| (T extends string | number | bigint | boolean ? T : never)
@@ -44,56 +46,64 @@ export interface Arg {
 	name: string;
 }
 
-export interface Command<
-	F extends Record<string, Flag> = {},
-	A extends Arg[] = [],
-> {
+export interface Command<F extends Record<string, Flag>, A extends Arg[]> {
 	name: string;
 	usage: string;
-	flags?: F;
-	args?: A;
-
+	flags: F;
+	args: A;
+	subcommands?: AnyCommand[];
 	run(options: RunOptions<F, A>): Promise<void>;
 }
 
-export function oarfish() {
-	const commands: Command[] = [];
+export type AnyCommand = Command<Record<string, Flag>, Arg[]>;
+
+export interface OarfishOptions {
+	showHelpMenu?: boolean;
+	commands: AnyCommand[];
+}
+
+export function oarfish({commands, showHelpMenu = true}: OarfishOptions) {
+	const tree = commands;
 
 	return {
-		//
+		run(_argv = process.argv) {
+			const argv = hideBin(_argv);
+
+			const mapped = argv.map(arg => {
+				if (arg.length === 2 && arg.startsWith('-')) {
+					return {
+						type: 'FLAG' as const,
+						data: arg[1],
+					};
+				}
+
+				if (arg.startsWith('--')) {
+					return {
+						type: 'FLAG' as const,
+						data: arg.slice(2),
+					};
+				}
+
+				return {
+					type: 'ARG' as const,
+					data: arg,
+				};
+			});
+
+			const args = mapped
+				.filter(arg => arg.type === 'ARG')
+				.map(arg => arg.data);
+
+			console.log({
+				mapped,
+				args,
+			});
+		},
 	};
 }
 
-export function command<
-	F extends Record<string, Flag> = {},
-	A extends Arg[] = [],
->(c: Narrow<Command<F, A>>) {
+export function command<F extends Record<string, Flag>, A extends Arg[]>(
+	c: Narrow<Command<F, A>>,
+) {
 	return c;
 }
-
-const helloWorld = command({
-	name: 'hello',
-
-	usage: '--name <your name>',
-
-	args: [
-		{
-			name: 'bruh',
-			type: 'number',
-		},
-	],
-
-	flags: {
-		name: {
-			alias: 'n',
-			type: 'string',
-			required: true,
-		},
-	},
-
-	async run(options) {
-		options.args.bruh;
-
-		console.log(options.flags.name);
-	},
-});

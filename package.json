@@ -1,12 +1,24 @@
 {
-  "name": "oarfish",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "packageManager": "yarn@3.2.1",
-  "devDependencies": {
-    "prettier": "^2.6.2",
-    "tsup": "^5.12.8",
-    "typescript": "^4.6.4"
-  }
+	"name": "oarfish",
+	"version": "1.0.0",
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"license": "MIT",
+	"packageManager": "yarn@3.2.1",
+	"scripts": {
+		"test": "node -r tsm test.ts",
+		"build": "tsup src/index.ts --format cjs,esm --dts"
+	},
+	"devDependencies": {
+		"@types/node": "^17.0.35",
+		"@types/yargs": "^17",
+		"prettier": "^2.6.2",
+		"tsm": "^2.2.1",
+		"tsup": "^5.12.8",
+		"typescript": "^4.6.4"
+	},
+	"dependencies": {
+		"yargs": "^17.5.1"
+	}
 }

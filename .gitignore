@@ -2,6 +2,8 @@
 .vscode
 dist
 .yarn/*
+!.yarn/plugins
 !.yarn/releases
+!.yarn/sdks
 node_modules
 .DS_Store
