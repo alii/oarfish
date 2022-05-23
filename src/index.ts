@@ -62,9 +62,15 @@ export interface OarfishOptions {
 	commands: AnyCommand[];
 }
 
-export function oarfish({commands, showHelpMenu = true}: OarfishOptions) {
-	const tree = commands;
+/**
+ * Finds a command from the arguments array.
+ *
+ * @param commands An array of commands
+ * @param args Arguments passed to the program
+ */
+function findCommand(commands: AnyCommand[], args: string[]) {}
 
+export function oarfish({commands, showHelpMenu = true}: OarfishOptions) {
 	return {
 		run(_argv = process.argv) {
 			const argv = hideBin(_argv);
@@ -93,6 +99,17 @@ export function oarfish({commands, showHelpMenu = true}: OarfishOptions) {
 			const args = mapped
 				.filter(arg => arg.type === 'ARG')
 				.map(arg => arg.data);
+
+			let argumentIndex = 0;
+			let command: AnyCommand | null = null;
+
+			while (!command) {
+				for (const c of commands) {
+					if (c.args) {
+						//
+					}
+				}
+			}
 
 			console.log({
 				mapped,
