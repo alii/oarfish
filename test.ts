@@ -1,7 +1,18 @@
 import {oarfish, command} from './src';
 
 oarfish({
+	name: 'oarfish',
 	commands: [
+		command({
+			name: 'help',
+			args: [],
+			usage: 'Get help about a command',
+			flags: {},
+			async run(options) {
+				console.log(options);
+			},
+		}),
+
 		command({
 			name: 'hello',
 			usage: '--name <your name>',
@@ -19,7 +30,7 @@ oarfish({
 				},
 			},
 			async run(options) {
-				console.log(options);
+				console.log(options.flags.name);
 			},
 			subcommands: [
 				command({

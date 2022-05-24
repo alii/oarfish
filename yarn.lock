@@ -73,7 +73,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/yargs-parser@npm:*":
+"@types/yargs-parser@npm:*, @types/yargs-parser@npm:^21":
   version: 21.0.0
   resolution: "@types/yargs-parser@npm:21.0.0"
   checksum: b2f4c8d12ac18a567440379909127cf2cec393daffb73f246d0a25df36ea983b93b7e9e824251f959e9f928cbc7c1aab6728d0a0ff15d6145f66cec2be67d9a2
@@ -1309,11 +1309,13 @@ __metadata:
   dependencies:
     "@types/node": ^17.0.35
     "@types/yargs": ^17
+    "@types/yargs-parser": ^21
     prettier: ^2.6.2
     tsm: ^2.2.1
     tsup: ^5.12.8
     typescript: ^4.6.4
     yargs: ^17.5.1
+    yargs-parser: ^21.0.1
   languageName: unknown
   linkType: soft
 
@@ -1916,7 +1918,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs-parser@npm:^21.0.0":
+"yargs-parser@npm:^21.0.0, yargs-parser@npm:^21.0.1":
   version: 21.0.1
   resolution: "yargs-parser@npm:21.0.1"
   checksum: c3ea2ed12cad0377ce3096b3f138df8267edf7b1aa7d710cd502fe16af417bafe4443dd71b28158c22fcd1be5dfd0e86319597e47badf42ff83815485887323a
